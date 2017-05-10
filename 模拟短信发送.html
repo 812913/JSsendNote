@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟手机短信发送</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        .clearfloat::after{
+            display: block;
+            content: '';
+            clear: both;
+            height:0;
+            visibility: hidden;
+        }
+        body{
+            background: #000000;
+        }
+        #container{
+            position: relative;
+            width: 350px;
+            height: 670px;
+            margin:60px auto 0;
+            border:1px solid #000;
+        }
+        #magdiv{
+            position: absolute;
+            width:260px;
+            height:331px;
+            overflow: auto;
+            top:86px;
+            left:38px;
+            padding:10px 5px 120px;
+            background-color: #fff;
+        }
+        form{
+            position: absolute;
+            width:267px;
+            height:50px;
+            line-height:50px;
+            background: #fff;
+            border:2px solid #ccc;
+            bottom:100px;
+            left:38px;
+
+        }
+        ul{
+            list-style: none;
+            height:50px;
+            line-height:50px;
+        }
+        li{
+            float: left;
+            height:30px;
+            line-height:30px;
+            margin-top:8px;
+        }
+        li:first-child{
+            width:10%;
+            border:1px solid #ddd;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;:;
+        }
+        #himg{
+            width:25px;
+            height:25px;
+        }
+        li:nth-child(2){
+            width:70%;
+            text-align: center;
+        }
+        #sendmag{
+            width:100%;
+            height:29px;
+            padding-left:5px;
+            border:1px solid #ccc;
+            border-radius:10px;
+            outline: none;
+        }
+        li:last-child{
+            width:16%;
+        }
+        #btn{
+            width:100%;
+            height:30px;
+            border:none;
+            outline: none;
+            cursor: pointer;
+            background-color:#fff;
+            font-size:20px;
+            color: rgba(0,0,0,0.7);
+        }
+/*js中添加的类：*/
+        .dialog{
+            margin:3px 0;
+        }
+        .dlg1{
+            float: left;
+        }
+        .dlg2{
+            float: right;
+        }
+        .divimg{
+            width:25px;
+            height:25px;
+            vertical-align: top;
+        }
+       .p{
+            display: inline-block;
+            min-height:25px;
+            margin:0 3px;
+            padding:3px 5px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius:3px;
+        }
+        .divp1{
+            background-color:#ddd
+        }
+        .divp2{
+            background-color: #54b81c;
+            float: left;
+        }
+/*定义滚动条样式：*/
+        /*定义滚动条的高宽和背景 高宽分别对应横竖滚动条的尺寸*/
+        ::-webkit-scrollbar{
+            width:10px;
+            height:10px;
+            background-color:#f5f5f5;
+        }
+        /*定义滚动条的轨道 内阴影+圆角*/
+        ::-webkit-scrollbar-track{
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            -webkit-border-radius:10px;
+            -moz-border-radius:10px;
+            border-radius:10px;
+            background-color: #f5f5f5;
+        }
+        /*定义滑块 内阴影+圆角*/
+        ::-webkit-scrollbar-thumb{
+            -webkit-border-radius: 10px;
+            -moz-border-radius: 10px;
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            background-color: #bfbfbf;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img src="img/tel.jpg"/>
+        <div id="magdiv"></div>
+        <form name="" action="#">
+            <ul class="clearfloat">
+                <li><img id="himg" src="img/1.png"/></li>
+                <li><input id="sendmag" type="text"/></li>
+                <li><input id="btn" type="submit" value="发送"/></li>
+            </ul>
+        </form>
+    </div>
+
+    <script>
+        var magdiv=document.getElementById('magdiv');
+        var himg=document.getElementById('himg');
+        var sendmag=document.getElementById('sendmag');
+        var btn=document.getElementById('btn');
+
+        flag=true;
+        himg.onclick=function(){
+            if(flag){
+                himg.src='img/2.png';
+                flag=false;
+            }else{
+                himg.src='img/1.png';
+                flag=true;
+            }
+        };
+
+        btn.onclick=function(){
+            if(sendmag.value==''){
+                return;
+            }else{
+//              magdiv.innerHTML+='<div class="clearfloat">'+'<div class="dialog">'+'<img class="divimg" src='+himg.src+'/>'+'<p class="p">'+sendmag.value+'</p>'+'</div>'+'</div>';
+// 注意图片的路径的写法这种方法从webstrom中能正常打开，图片显示正常，在本地打开，图片无法正常显示;
+
+                magdiv.innerHTML+='<div class="clearfloat">'+'<div class="dialog">'+'<img class="divimg"/>'+'<p class="p">'+sendmag.value+'</p>'+'</div>'+'</div>';//注意图片的路径;
+                var arrimg=document.getElementsByClassName('divimg');
+                var img=arrimg[arrimg.length-1];
+                img.src=himg.src;
+// 这种方法图片显示正常
+
+                sendmag.value='';
+                    var arrdlg=document.getElementsByClassName('dialog');
+                    var arrp=document.getElementsByClassName('p');
+                    var dlg=arrdlg[arrdlg.length-1];
+                    var p=arrp[arrp.length-1];
+                    if(flag){
+                        dlg.className+=' dlg1';
+                        p.className+=' divp1';
+                    }else{
+                        dlg.className+=' dlg2';
+                        p.className+=' divp2';
+                    }
+                }
+            }
+
+
+    </script>
+</body>
+</html>
